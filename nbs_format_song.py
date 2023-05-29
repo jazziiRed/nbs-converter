@@ -43,7 +43,6 @@ def removeHighestNotes(chord, chordMaxSize):
 
 def removeChordViolations(chord):
   listOfChords = {}
-  chordViolation = 0
   for note in chord:
     if note.instrument in listOfChords:
       listOfChords[note.instrument].append(note)
@@ -53,9 +52,11 @@ def removeChordViolations(chord):
   for instrument, singleChord in listOfChords.items():
     newSingleChord = removeHighestNotes(singleChord, CHORD_MAX_SIZES[INSTRUMENTS[instrument]])
     newChord += newSingleChord
-  if len(newChord) < len(chord):
-    chordViolation = 1
-  return [newChord, chordViolation]
+  preservedOrderChord = []
+  for note in chord:
+    if note in newChord:
+      preservedOrderChord.append(note)
+  return [preservedOrderChord, len(preservedOrderChord) < len(chord)]
 
 def main():
   # get song file from user
@@ -70,6 +71,7 @@ def main():
   originalSongLength = song.header.song_length
   if originalSongLength > 1458:
     print('Your song\'s length is ', originalSongLength, ', and the max length of a song is ', MAX_SONG_LENGTH, '.')
+  print('You might want to compress your song if it is too slow or too long.')
   print('Compressing your song would remove every other tick and make it half as long. This may or may not make your song sound much worse.')
   settingCompress = 1 if getValidInput(['y', 'n'], 'Would you like to compress your song? (y/n): ') == 'y' else 0
 

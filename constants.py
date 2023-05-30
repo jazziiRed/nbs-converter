@@ -1,4 +1,4 @@
-MAX_SONG_LENGTH = 1458
+MAX_SONG_LENGTH = 1457
 
 INSTRUMENTS = [
     'piano',
@@ -39,3 +39,5 @@ CHORD_MAX_SIZES = {
     'banjo': 1,
     'pling': 3,
 }
+
+CHEST_MIN_FILL = 4

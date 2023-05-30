@@ -52,6 +52,9 @@ def removeChordViolations(chord):
   for instrument, singleChord in listOfChords.items():
     newSingleChord = removeHighestNotes(singleChord, CHORD_MAX_SIZES[INSTRUMENTS[instrument]])
     newChord += newSingleChord
+  
+  # We need to preserve the original note order, because sometimes
+  # saving has issues when notes are reordered
   preservedOrderChord = []
   for note in chord:
     if note in newChord:
@@ -69,7 +72,7 @@ def main():
 
   # give user option to compress song
   originalSongLength = song.header.song_length
-  if originalSongLength > 1458:
+  if originalSongLength > MAX_SONG_LENGTH:
     print('Your song\'s length is ', originalSongLength, ', and the max length of a song is ', MAX_SONG_LENGTH, '.')
   print('You might want to compress your song if it is too slow or too long.')
   print('Compressing your song would remove every other tick and make it half as long. This may or may not make your song sound much worse.')

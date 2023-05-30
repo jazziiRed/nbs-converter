@@ -52,14 +52,23 @@ def removeEmptyChests(chestContents):
   newChestContents = {}
   for instrument, contents in chestContents.items():
     newChestContents[instrument] = []
-    for chest in contents:
-      isEmpty = 1
-      for note in chest:
+    for octaves in contents:
+      newOctaves = [[], []]
+      isLowerOctaveEmpty = 1
+      isUpperOctaveEmpty = 1
+      for note in octaves[0]:
         if note != -1:
-          isEmpty = 0
+          isLowerOctaveEmpty = 0
           break
-      if isEmpty == 0:
-        newChestContents[instrument].append(chest)
+      for note in octaves[1]:
+        if note != -1:
+          isUpperOctaveEmpty = 0
+          break
+      if isLowerOctaveEmpty == 0:
+        newOctaves[0] = octaves[0]
+      if isUpperOctaveEmpty == 0:
+        newOctaves[1] = octaves[1]
+      newChestContents[instrument].append(newOctaves)
   return newChestContents
 
 def main():
@@ -81,8 +90,11 @@ def main():
 
   # initialize data structure
   allChestContents = {}
+  emptyChest = numpy.full(songLengthAdjusted, -1)
   for instrument in INSTRUMENTS:
-    allChestContents[instrument] = numpy.full((CHORD_MAX_SIZES[instrument], songLengthAdjusted), -1)
+    allChestContents[instrument] = []
+    for i in range(CHORD_MAX_SIZES[instrument]):
+      allChestContents[instrument].append([emptyChest.copy(), emptyChest.copy()])
 
   # iterate through the whole song by chords
   keyModifier = INSTRUMENT_RANGE[0]
@@ -94,10 +106,14 @@ def main():
     
     for note in chord:
       instrument = INSTRUMENTS[note.instrument]
-      allChestContents[instrument][currentIndices[instrument]][tick] = note.key - keyModifier
+      adjustedKey = note.key - keyModifier
+      octave = 0 if adjustedKey <= 11 else 1
+      allChestContents[instrument][currentIndices[instrument]][octave][tick] = adjustedKey
       currentIndices[instrument] += 1
   
+  # print(allChestContents)
   minimalChestContents = removeEmptyChests(allChestContents)
+  print(minimalChestContents)
 
   # todo: turn minimalChestContents into a schematic
 

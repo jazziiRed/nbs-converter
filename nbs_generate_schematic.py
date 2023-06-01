@@ -1,6 +1,7 @@
 import pynbs
 import sys
 import numpy
+import mcschematic
 from constants import *
 
 def verifyFormat(song):
@@ -71,6 +72,25 @@ def removeEmptyChests(chestContents):
       newChestContents[instrument].append(newOctaves)
   return newChestContents
 
+def newDisc(slot, note):
+  if note == -1:
+    return '{Count:1b,Slot:' + str(slot) + 'b,id:"minecraft:wooden_shovel"}'
+  while note >= 12:
+    note -= 12
+  return '{Count:1b,Slot:' + str(slot) + 'b,id:' + NOTES_TO_DISCS[note] + '}'
+
+def createShulker(currentShulker, contents):
+  slot = (currentShulker - 1) % 27
+  # remove trailing comma
+  contents = contents[:len(contents) - 1]
+  return '{Count:1b,Slot:' + str(slot) + 'b,id:"minecraft:shulker_box",tag:{BlockEntityTag:{CustomName:\'{"text":"' + str(currentShulker) + '"}\',Items:[' + contents + '],id:"minecraft:shulker_box"},display:{Name:\'{"text":"' + str(currentShulker) + '"}\'}}}'
+
+def createChest(type, contents):
+  # remove trailing comma
+  if len(contents) > 0:
+    contents = contents[:len(contents) - 1]
+  return 'minecraft:chest[facing=south,type=' + type + ']{Items:[' + contents + ']}'
+
 def main():
    # get song file from user
   songFile = input('Please enter the file name of your song (include the .nbs): ')
@@ -111,11 +131,66 @@ def main():
       allChestContents[instrument][currentIndices[instrument]][octave][tick] = adjustedKey
       currentIndices[instrument] += 1
   
-  # print(allChestContents)
   minimalChestContents = removeEmptyChests(allChestContents)
-  print(minimalChestContents)
 
-  # todo: turn minimalChestContents into a schematic
+  # turn minimalChestContents into a schematic
+  schem = mcschematic.MCSchematic()
+  offset = 0
+  for instrument, contents in minimalChestContents.items():
+    print(instrument)
+    for module in contents:
+      lowerChest1 = ''
+      upperChest1 = ''
+      lowerChest2 = ''
+      upperChest2 = ''
+      lowerShulker = ''
+      upperShulker = ''
+      currentShulker = 1
+      lowerOctaveEmpty = len(module[0]) == 0
+      upperOctaveEmpty = len(module[1]) == 0
+      for currentTick in range(songLengthAdjusted):
+        currentSlot = currentTick % 27
+        if lowerOctaveEmpty == 0:
+          lowerShulker += newDisc(currentSlot, module[0][currentTick]) + ','
+        if upperOctaveEmpty == 0:
+          upperShulker += newDisc(currentSlot, module[1][currentTick]) + ','
+        # if we are on the last slot of a shulker box, or the song has ended
+        if (currentTick + 1) % 27 == 0 or currentTick == songLengthAdjusted - 1:
+          # turn the shulker contents into actual shulker
+          if lowerOctaveEmpty == 0:
+            lowerShulker = createShulker(currentShulker, lowerShulker)
+          if upperOctaveEmpty == 0:
+            upperShulker = createShulker(currentShulker, upperShulker)
+          # if the current shulker should go in the first chests
+          if currentShulker <= 27:
+            if lowerOctaveEmpty == 0:
+              lowerChest1 += lowerShulker + ','
+            if upperOctaveEmpty == 0:
+              upperChest1 += upperShulker + ','
+          else:
+            if lowerOctaveEmpty == 0:
+              lowerChest2 += lowerShulker + ','
+            if upperOctaveEmpty == 0:
+              upperChest2 += upperShulker + ','
+          # reset the shulkers and increment the current shulker
+          lowerShulker = ''
+          upperShulker = ''
+          currentShulker += 1
+      
+      if lowerOctaveEmpty == 0:
+        lowerChest1 = createChest('right', lowerChest1)
+        lowerChest2 = createChest('left', lowerChest2)
+        schem.setBlock((offset, 0, -1), lowerChest1)
+        schem.setBlock((offset + 1, 0, -1), lowerChest2)
+      if upperOctaveEmpty == 0:
+        upperChest1 = createChest('right', upperChest1)
+        upperChest2 = createChest('left', upperChest2)
+        schem.setBlock((offset, 1, -1), upperChest1)
+        schem.setBlock((offset + 1, 1, -1), upperChest2)
+      
+      offset += 2
+    
+  schem.save('', 'test_schematic', mcschematic.Version.JE_1_19)
 
 
 if __name__ == '__main__':

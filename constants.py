@@ -40,6 +40,26 @@ CHORD_MAX_SIZES = {
     'pling': 3,
 }
 
+# 'l' means keep the low notes; 'h' means keep the high notes
+KEEP_NOTES_BY_INSTRUMENT = {
+    'piano': 'h',
+    'double bass': 'l',
+    'bass drum': 'l',
+    'snare drum': 'l',
+    'click': 'l',
+    'guitar': 'l',
+    'flute': 'h',
+    'bell': 'l',
+    'chime': 'l',
+    'xylophone': 'l',
+    'iron xylophone': 'l',
+    'cow bell': 'l',
+    'digeridoo': 'l',
+    'bit': 'l',
+    'banjo': 'l',
+    'pling': 'h',
+}
+
 CHEST_MIN_FILL = 4
 
 NOTES_TO_DISCS = [
@@ -55,4 +75,5 @@ NOTES_TO_DISCS = [
     '"minecraft:music_disc_ward",tag:{display:{Name:\'{"text":"D#"}\'}}',
     '"minecraft:music_disc_11",tag:{display:{Name:\'{"text":"E"}\'}}',
     '"minecraft:music_disc_wait",tag:{display:{Name:\'{"text":"F"}\'}}',
+    # maybe add pigstep here for the complete range
 ]

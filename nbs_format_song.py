@@ -41,6 +41,16 @@ def removeHighestNotes(chord, chordMaxSize):
   chord.remove(highestNote)
   return removeHighestNotes(chord, chordMaxSize)
 
+def removeLowestNotes(chord, chordMaxSize):
+  if len(chord) <= chordMaxSize:
+    return chord
+  lowestNote = chord[0]
+  for note in chord:
+    if note.key < lowestNote.key:
+      lowestNote = note
+  chord.remove(lowestNote)
+  return removeLowestNotes(chord, chordMaxSize)
+
 def removeChordViolations(chord):
   listOfChords = {}
   for note in chord:
@@ -50,7 +60,10 @@ def removeChordViolations(chord):
       listOfChords[note.instrument] = [note]
   newChord = []
   for instrument, singleChord in listOfChords.items():
-    newSingleChord = removeHighestNotes(singleChord, CHORD_MAX_SIZES[INSTRUMENTS[instrument]])
+    if KEEP_NOTES_BY_INSTRUMENT[INSTRUMENTS[instrument]] == 'h':
+      newSingleChord = removeLowestNotes(singleChord, CHORD_MAX_SIZES[INSTRUMENTS[instrument]])
+    else:
+      newSingleChord = removeHighestNotes(singleChord, CHORD_MAX_SIZES[INSTRUMENTS[instrument]])
     newChord += newSingleChord
   
   # We need to preserve the original note order, because sometimes

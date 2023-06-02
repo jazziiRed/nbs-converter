@@ -9,7 +9,7 @@ def getValidInput(validInputs, msg):
     if userInput in validInputs:
       isValid = 1
     else:
-      print('\"', userInput, '\" is not a valid input.')
+      print('"', userInput, '" is not a valid input.')
   return userInput
 
 def removeCustomNotes(chord):
@@ -68,7 +68,7 @@ def main():
     song = pynbs.read(songFile)
     songName = songFile[:songFile.find('.nbs')]
   except:
-    sys.exit('Error: could not find \"' + songFile + '\"')
+    sys.exit('Error: could not find "' + songFile + '"')
 
   # give user option to compress song
   originalSongLength = song.header.song_length
@@ -124,7 +124,7 @@ def main():
   newFileName = songName + ' (Formatted).nbs'
 
   newSong.save(newFileName)
-  print('Your formatted song was saved under \"', newFileName, '\"')
+  print('Your formatted song was saved under "', newFileName, '"')
 
 
 if __name__ == '__main__':

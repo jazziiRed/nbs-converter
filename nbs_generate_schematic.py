@@ -196,8 +196,7 @@ def main():
         schem.setBlock((offset, 1, 0), createSign(instrument, currentModule, 1))
       
       currentModule += 1
-      if lowerOctaveEmpty == 0 or upperOctaveEmpty == 0:
-        offset += 2
+      offset += 2
   
   saveName = songName.lower().replace('(', '').replace(')', '').replace(' ', '_')
   schem.save('', saveName, mcschematic.Version.JE_1_19)

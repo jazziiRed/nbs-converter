@@ -75,5 +75,5 @@ NOTES_TO_DISCS = [
     '"minecraft:music_disc_ward",tag:{display:{Name:\'{"text":"D#"}\'}}',
     '"minecraft:music_disc_11",tag:{display:{Name:\'{"text":"E"}\'}}',
     '"minecraft:music_disc_wait",tag:{display:{Name:\'{"text":"F"}\'}}',
-    # maybe add pigstep here for the complete range
+    '"minecraft:music_disc_pigstep",tag:{display:{Name:\'{"text":"F#"}\'}}',
 ]

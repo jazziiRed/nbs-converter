@@ -37,7 +37,14 @@ def verifyFormat(song):
       else:
         listOfChords[note.instrument] = [note]
     for instrument, singleChord in listOfChords.items():
-      if len(singleChord) > CHORD_MAX_SIZES[INSTRUMENTS[instrument]]:
+      lowerOctaveNotes = []
+      upperOctaveNotes = []
+      for note in singleChord:
+        if note.key < INSTRUMENT_RANGE[0] + 12:
+          lowerOctaveNotes.append(note)
+        else:
+          upperOctaveNotes.append(note)
+      if len(lowerOctaveNotes) > CHORD_MAX_SIZES[INSTRUMENTS[instrument]] or len(upperOctaveNotes) > CHORD_MAX_SIZES[INSTRUMENTS[instrument]]:
         print('Warning: Your song contains chords that are larger than allowed.')
         isValid = 0
         break
@@ -126,14 +133,14 @@ def main():
   for tick, chord in song:
     # reset current indices
     for instrument in INSTRUMENTS:
-      currentIndices[instrument] = 0
+      currentIndices[instrument] = [0, 0]
     
     for note in chord:
       instrument = INSTRUMENTS[note.instrument]
       adjustedKey = note.key - keyModifier
       octave = 0 if adjustedKey <= 11 else 1
-      allChestContents[instrument][currentIndices[instrument]][octave][tick] = adjustedKey
-      currentIndices[instrument] += 1
+      allChestContents[instrument][currentIndices[instrument][octave]][octave][tick] = adjustedKey
+      currentIndices[instrument][octave] += 1
   
   minimalChestContents = removeEmptyChests(allChestContents)
 

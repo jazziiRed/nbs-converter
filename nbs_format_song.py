@@ -31,7 +31,7 @@ def fixIllegalNotes(chord):
     newChord.append(note)
   return newChord
 
-def removeHighestNotes(chord, chordMaxSize):
+def removeHighestHelper(chord, chordMaxSize):
   if len(chord) <= chordMaxSize:
     return chord
   highestNote = chord[0]
@@ -39,9 +39,20 @@ def removeHighestNotes(chord, chordMaxSize):
     if note.key > highestNote.key:
       highestNote = note
   chord.remove(highestNote)
-  return removeHighestNotes(chord, chordMaxSize)
+  return removeHighestHelper(chord, chordMaxSize)
 
-def removeLowestNotes(chord, chordMaxSize):
+def removeHighestNotes(chord, chordMaxSize):
+  lowerOctaveNotes = upperOctaveNotes = []
+  for note in chord:
+    if note.key < INSTRUMENT_RANGE[0] + 12:
+      lowerOctaveNotes.append(note)
+    else:
+      upperOctaveNotes.append(note)
+  lowerOctaveNotes = removeHighestHelper(lowerOctaveNotes, chordMaxSize)
+  upperOctaveNotes = removeHighestHelper(upperOctaveNotes, chordMaxSize)
+  return lowerOctaveNotes + upperOctaveNotes
+
+def removeLowestHelper(chord, chordMaxSize):
   if len(chord) <= chordMaxSize:
     return chord
   lowestNote = chord[0]
@@ -49,7 +60,19 @@ def removeLowestNotes(chord, chordMaxSize):
     if note.key < lowestNote.key:
       lowestNote = note
   chord.remove(lowestNote)
-  return removeLowestNotes(chord, chordMaxSize)
+  return removeLowestHelper(chord, chordMaxSize)
+
+def removeLowestNotes(chord, chordMaxSize):
+  lowerOctaveNotes = []
+  upperOctaveNotes = []
+  for note in chord:
+    if note.key < INSTRUMENT_RANGE[0] + 12:
+      lowerOctaveNotes.append(note)
+    else:
+      upperOctaveNotes.append(note)
+  lowerOctaveNotes = removeLowestHelper(lowerOctaveNotes, chordMaxSize)
+  upperOctaveNotes = removeLowestHelper(upperOctaveNotes, chordMaxSize)
+  return lowerOctaveNotes + upperOctaveNotes
 
 def removeChordViolations(chord):
   listOfChords = {}
@@ -131,7 +154,7 @@ def main():
         newSong.notes.append(note)
   
   if hasMaxChordViolation == 1:
-    print('Notice: Your song contained chords that were larger than allowed. The highest notes of these chords were removed.')
+    print('Notice: Your song contained chords that were larger than allowed. Some notes were removed from these chords.')
 
   #save the new song
   newFileName = songName + ' (Formatted).nbs'

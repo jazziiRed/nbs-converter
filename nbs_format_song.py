@@ -156,7 +156,7 @@ def main():
   if hasMaxChordViolation == 1:
     print('Notice: Your song contained chords that were larger than allowed. Some notes were removed from these chords.')
 
-  #save the new song
+  # save the new song
   newFileName = songName + ' (Formatted).nbs'
 
   newSong.save(newFileName)

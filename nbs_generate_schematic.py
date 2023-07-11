@@ -100,7 +100,7 @@ def createChest(type, contents):
 
 def createSign(instrument, currentModule, octave):
   octaveMessage = 'lower octave' if octave == 0 else 'upper octave'
-  return 'minecraft:oak_wall_sign[facing=south,waterlogged=false]{Color:"black",GlowingText:0b,Text1:\'{"text":"' + instrument + ' ' + str(currentModule) + '"}\',Text2:\'{"text":"' + octaveMessage + '"}\'}'
+  return 'minecraft:oak_wall_sign[facing=south,waterlogged=false]{front_text:{color:"black",has_glowing_text:0b,messages:[\'{"text":"' + instrument + ' ' + str(currentModule) + '"}\',\'{"text":"' + octaveMessage + '"}\',\'{"text":""}\',\'{"text":""}\']},is_waxed:0b}'
 
 def main():
    # get song file from user
@@ -206,6 +206,7 @@ def main():
       offset += 2
   
   saveName = songName.lower().replace('(', '').replace(')', '').replace(' ', '_')
+  # TODO: Change to enum when mcschematic is updated
   schem.save('', saveName, mcschematic.Version.JE_1_19)
   print('Your schematic was successfully generated and saved under "' + saveName + '.schem"')
 

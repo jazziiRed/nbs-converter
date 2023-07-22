@@ -84,7 +84,8 @@ def newDisc(slot, note):
     return '{Count:1b,Slot:' + str(slot) + 'b,id:"minecraft:wooden_shovel"}'
   if note > 12:
     note -= 12
-  return '{Count:1b,Slot:' + str(slot) + 'b,id:' + NOTES_TO_DISCS[note] + '}'
+  disc = NOTES_TO_DISCS_NAMED[note] if NAME_DISCS == 1 else NOTES_TO_DISCS_UNNAMED[note]
+  return '{Count:1b,Slot:' + str(slot) + 'b,id:' + disc + '}'
 
 def createShulker(currentShulker, contents):
   slot = (currentShulker - 1) % 27

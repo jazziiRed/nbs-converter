@@ -62,7 +62,28 @@ KEEP_NOTES_BY_INSTRUMENT = {
 
 CHEST_MIN_FILL = 4
 
-NOTES_TO_DISCS = [
+# Choose whether or not to use named discs
+# Using unnamed discs will reduce schematic size and
+# Possibly reduce lag due to less NBT data
+NAME_DISCS = 0,
+
+NOTES_TO_DISCS_UNNAMED = [
+    '"minecraft:music_disc_13"',
+    '"minecraft:music_disc_cat"',
+    '"minecraft:music_disc_blocks"',
+    '"minecraft:music_disc_chirp"',
+    '"minecraft:music_disc_far"',
+    '"minecraft:music_disc_mall"',
+    '"minecraft:music_disc_mellohi"',
+    '"minecraft:music_disc_stal"',
+    '"minecraft:music_disc_strad"',
+    '"minecraft:music_disc_ward"',
+    '"minecraft:music_disc_11"',
+    '"minecraft:music_disc_wait"',
+    '"minecraft:music_disc_pigstep"',
+]
+
+NOTES_TO_DISCS_NAMED = [
     '"minecraft:music_disc_13",tag:{display:{Name:\'{"text":"F#"}\'}}',
     '"minecraft:music_disc_cat",tag:{display:{Name:\'{"text":"G"}\'}}',
     '"minecraft:music_disc_blocks",tag:{display:{Name:\'{"text":"G#"}\'}}',

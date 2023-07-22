@@ -207,8 +207,7 @@ def main():
       offset += 2
   
   saveName = songName.lower().replace('(', '').replace(')', '').replace(' ', '_')
-  # TODO: Change to enum when mcschematic is updated
-  schem.save('', saveName, mcschematic.Version.JE_1_19)
+  schem.save('', saveName, mcschematic.Version.JE_1_20)
   print('Your schematic was successfully generated and saved under "' + saveName + '.schem"')
 
 

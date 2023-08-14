@@ -82,7 +82,7 @@ def removeEmptyChests(chestContents):
 def newDisc(slot, note):
   if note == -1:
     return '{Count:1b,Slot:' + str(slot) + 'b,id:"minecraft:wooden_shovel"}'
-  if note > 12:
+  if note >= 12:
     note -= 12
   disc = NOTES_TO_DISCS_NAMED[note] if NAME_DISCS == 1 else NOTES_TO_DISCS_UNNAMED[note]
   return '{Count:1b,Slot:' + str(slot) + 'b,id:' + disc + '}'

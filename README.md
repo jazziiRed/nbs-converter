@@ -36,7 +36,7 @@ This should spit out the version of Python that was installed on your system.
 
 If none of these commands work, Google your error message. There are plenty of online forums such as stackoverflow that may contain the answer to your issues. Failing everything, simply uninstall and reinstall Python. Sometimes that works.
 
-Once one of these commands work, take note of which one (`py`, `pythoh`, or `python3`) worked on your system. This will be the command used to run Python scripts moving forward.
+Once one of these commands work, take note of which one (`py`, `python`, or `python3`) worked on your system. This will be the command used to run Python scripts moving forward.
 
 ### Installing Packages
 

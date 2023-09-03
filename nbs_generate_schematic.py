@@ -200,7 +200,6 @@ def main():
         schem.setBlock((offset, 0, -1), "minecraft:air")
         schem.setBlock((offset + 1, 0, -1), "minecraft:air")
         schem.setBlock((offset, 0, 0), "minecraft:air")
-        schem.setBlock((offset + 1, 0, 0), "minecraft:air")
       
       if upperOctaveEmpty == 0:
         upperChest1 = createChest('right', upperChest1)
@@ -212,7 +211,6 @@ def main():
         schem.setBlock((offset, 1, -1), "minecraft:air")
         schem.setBlock((offset + 1, 1, -1), "minecraft:air")
         schem.setBlock((offset, 1, 0), "minecraft:air")
-        schem.setBlock((offset + 1, 1, 0), "minecraft:air")
       
       currentModule += 1
       offset += 2

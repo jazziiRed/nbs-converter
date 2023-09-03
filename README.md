@@ -47,7 +47,11 @@ pip install pynbs
 pip install mcschematic
 ```
 
-Both of these libraries can be installed using `pip`, which should be automatically installed for you alongside Python. If you are on Windows, this should have been a checkbox during installation. If you have issues with `pip`, please look up your error message on Google. You might need to use `pip3` (or whatever version). Just like with Python, you can check your version of `pip` using either of the following commands:
+Both of these libraries can be installed using `pip`, which should be automatically installed for you alongside Python. If you are on Windows, this should have been a checkbox during installation.
+
+`pip` is a package manager used to install Python libraries that other people have written. These libraries contain code that you can use to easily do things that might take a long time to do from scratch, like parsing an `.nbs` file.
+
+If you have issues with `pip`, please look up your error message on Google. You might need to use `pip3` (or whatever version). Just like with Python, you can check your version of `pip` using either of the following commands:
 
 ```bash
 pip --version

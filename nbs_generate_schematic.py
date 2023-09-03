@@ -144,6 +144,7 @@ def main():
       currentIndices[instrument][octave] += 1
   
   minimalChestContents = removeEmptyChests(allChestContents)
+
   # turn minimalChestContents into a schematic
   schem = mcschematic.MCSchematic()
   offset = 0
@@ -195,22 +196,12 @@ def main():
         schem.setBlock((offset, 0, -1), lowerChest1)
         schem.setBlock((offset + 1, 0, -1), lowerChest2)
         schem.setBlock((offset, 0, 0), createSign(instrument, currentModule, 0))
-      else:
-        schem.setBlock((offset, 0, -1), "minecraft:air")
-        schem.setBlock((offset + 1, 0, -1), "minecraft:air")
-        schem.setBlock((offset, 0, 0), "minecraft:air")
-        schem.setBlock((offset + 1, 0, 0), "minecraft:air")
       if upperOctaveEmpty == 0:
         upperChest1 = createChest('right', upperChest1)
         upperChest2 = createChest('left', upperChest2)
         schem.setBlock((offset, 1, -1), upperChest1)
         schem.setBlock((offset + 1, 1, -1), upperChest2)
         schem.setBlock((offset, 1, 0), createSign(instrument, currentModule, 1))
-      else:
-        schem.setBlock((offset, 1, -1), "minecraft:air")
-        schem.setBlock((offset + 1, 1, -1), "minecraft:air")
-        schem.setBlock((offset, 1, 0), "minecraft:air")
-        schem.setBlock((offset + 1, 1, 0), "minecraft:air")
       
       currentModule += 1
       offset += 2

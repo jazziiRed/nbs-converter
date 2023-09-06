@@ -113,6 +113,20 @@ or whatever Python command worked for you in [Installing Python](#installing-pyt
 
 Follow the instructions that the script gives you, and at the end it should spit out a brand new `.schem` file that you can paste into your world!
 
+## Fast Formatting (win only)
+
+Step 1:
+Download the files in the windows folder
+
+Step 2:
+Put your .nbs files in the same folder as nbs_create.py and schem_creator.bat
+
+Step 3:
+Double Click the schem_creator.bat
+
+Step 4:
+Follow the instructions in the terminal
+
 ## Pasting the Song into Minecraft
 
 Ok, full transparency - this part requires you to have worldedit or some other mod that can handle `.schem` files in Minecraft. I'm not going to get into how to install this, as there are several great tutorials out there for installing and using worldedit. I'll link a couple here, but feel free to look around to find one that makes sense to you.

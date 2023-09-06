@@ -103,7 +103,7 @@ Follow the instructions that the script gives you, and at the end it should spit
 
 Now that you have a formatted `.nbs` song that sounds great, it's time to transform it into a form that can be pasted into Minecraft!
 
-This part's really easy. Again using either Command Prompt or Terminal, run the following:
+This part's really easy. Again using either Command Prompt or Terminal, run the following command: -> If you downloaded the whole repository you can just double click the `install_requirements.bat` file.
 
 ```bash
 py nbs_generate_schematic.py

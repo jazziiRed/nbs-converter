@@ -7,25 +7,25 @@ from constants import *
 
 def verify_format(song):
     print('Verifying your song...')
-    is_valid = 1
+    is_valid = True
     # check song length
     print('Checking song length...')
     if song.header.song_length > MAX_SONG_LENGTH:
         print('Warning: Your song is too long.')
-        is_valid = 0
+        is_valid = False
 
     # check custom instruments
     print('Checking for custom instruments...')
     if len(song.instruments) > 0:
         print('Warning: Your song contains custom instruments.')
-        is_valid = 0
+        is_valid = False
 
     # check range
     print('Checking note ranges...')
     for note in song.notes:
         if note.key < INSTRUMENT_RANGE[0] or note.key > INSTRUMENT_RANGE[1]:
             print('Warning: Your song contains notes that are outside the normal range.')
-            is_valid = 0
+            is_valid = False
             break
 
     # check chord lengths
@@ -48,14 +48,13 @@ def verify_format(song):
             if len(lower_octave_notes) > CHORD_MAX_SIZES[INSTRUMENTS[instrument]] or len(upper_octave_notes) > \
                     CHORD_MAX_SIZES[INSTRUMENTS[instrument]]:
                 print('Warning: Your song contains chords that are larger than allowed.')
-                is_valid = 0
+                is_valid = False
                 break
-        if is_valid == 0:
+        if not is_valid:
             break
 
-    if is_valid == 0:
-        sys.exit(
-            'We found some issues with your song. Please make sure to format it using the "nbs_format_song" script.')
+    if not is_valid:
+        sys.exit('We found some issues with your song. Please make sure to format it using the "nbs_format_song" script.')
     else:
         print('Song verified. Everything looks good!')
 

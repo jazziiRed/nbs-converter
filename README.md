@@ -22,6 +22,8 @@ Let's start off with installing [Open Note Block Studio](https://opennbs.org/), 
 
 Now for the technical stuff. First off, you need to have Python installed on your computer in order to run these sripts. If you've never done this, simply go to the [Python download page](https://www.python.org/downloads/) and install the latest version of Python for your operating system. If you are on MacOS, you may also use [Homebrew](https://brew.sh/).
 
+When installing Python, make sure to check the box that says "Add Python to PATH" (or something similar). This will allow you to run Python scripts from the command line.
+
 Whatever operating system you have and whatever method you choose, just make sure that Python installed properly by running **one** of the following in your Command Prompt (Windows) or Terminal (MacOS or Linux):
 
 ```bash
@@ -56,6 +58,13 @@ If you have issues with `pip`, please look up your error message on Google. You 
 ```bash
 pip --version
 pip3 --version
+```
+
+If `pip` doesn't work, you can also try the following (make sure to replace `python` with whatever command worked for you in [Installing Python](#installing-python)):
+
+```bash
+python -m pip install pynbs
+python -m pip install mcschematic
 ```
 
 Once you have these installed, the hard part is over! 🎉

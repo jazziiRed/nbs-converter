@@ -101,9 +101,7 @@ def remove_chord_violations(chord):
     return preserved_order_chord, len(preserved_order_chord) < len(chord)
 
 
-def main():
-    # get song file from user
-    song_file = input('Please enter the file name of your song (include the .nbs): ')
+def main(song_file):
     if not song_file.endswith('.nbs'):
         sys.exit('Your song file must end with ".nbs".')
 
@@ -174,4 +172,4 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    main(input('Please enter the file name of your song (include the .nbs): '))

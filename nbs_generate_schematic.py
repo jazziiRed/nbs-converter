@@ -5,7 +5,7 @@ import mcschematic
 from constants import *
 
 
-def verify_format(song):
+def verify_format(song, song_file):
     print('Verifying your song...')
     is_valid = True
     # check song length
@@ -54,7 +54,11 @@ def verify_format(song):
             break
 
     if not is_valid:
-        sys.exit('We found some issues with your song. Please make sure to format it using the "nbs_format_song" script.')
+        input('We found some issues with your song. This is likely because you have not used the "nbs_format_song" script. Press Enter to automatically format your song.')
+        import nbs_format_song
+        nbs_format_song.main(song_file)
+        print("Reverifying your song...")
+        verify_format(song, song_file)
     else:
         print('Song verified. Everything looks good!')
 
@@ -118,13 +122,16 @@ def create_sign(instrument, current_module, octave):
 def main():
     # get song file from user
     song_file = input('Please enter the file name of your song (include the .nbs): ')
+    if not song_file.endswith('.nbs'):
+        sys.exit('Your song file must end with ".nbs".')
+
     try:
         song = pynbs.read(song_file)
-        song_name = song_file[:song_file.find('.nbs')]
+        song_name = song_file[:-4]
     except Exception as e:
         sys.exit(f'An error occurred while reading the song file "{song_file}".\nExact error (search this up for help): {e}')
 
-    verify_format(song)
+    verify_format(song, song_file)
 
     # fix the length of the song for min fill of last chest
     last_chest_fill = (song.header.song_length + 1) % 27

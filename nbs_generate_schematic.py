@@ -129,7 +129,7 @@ def main():
     # fix the length of the song for min fill of last chest
     last_chest_fill = (song.header.song_length + 1) % 27
     song_length_adjusted = song.header.song_length + 1
-    if last_chest_fill >= 1 and last_chest_fill < CHEST_MIN_FILL:
+    if 1 <= last_chest_fill < CHEST_MIN_FILL:
         song_length_adjusted += CHEST_MIN_FILL - last_chest_fill
 
     # initialize data structure

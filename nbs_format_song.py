@@ -109,7 +109,7 @@ def main(song_file):
         song = pynbs.read(song_file)
         song_name = song_file[:-4]
     except Exception as e:
-        sys.exit(f'An error occurred while reading the song file "{song_file}".\nExact error (search this up for help): {e}')
+        sys.exit(f'An error occurred while reading the song file "{song_file}".\nError name: {e.__class__.__name__}\nExact error (search this up for help): {e}')
 
     # give user option to compress song
     original_song_length = song.header.song_length

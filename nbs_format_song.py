@@ -41,12 +41,8 @@ def removeHighestHelper(chord, chordMaxSize):
 
 
 def removeHighestNotes(chord, chordMaxSize):
-    lowerOctaveNotes = upperOctaveNotes = []
-    for note in chord:
-        if note.key < INSTRUMENT_RANGE[0] + 12:
-            lowerOctaveNotes.append(note)
-        else:
-            upperOctaveNotes.append(note)
+    lowerOctaveNotes = [note for note in chord if note.key < INSTRUMENT_RANGE[0] + 12]
+    upperOctaveNotes = [note for note in chord if note.key >= INSTRUMENT_RANGE[0] + 12]
 
     lowerOctaveNotes = removeHighestHelper(lowerOctaveNotes, chordMaxSize)
     upperOctaveNotes = removeHighestHelper(upperOctaveNotes, chordMaxSize)

@@ -33,22 +33,21 @@ def verifyFormat(song, songName):
   for tick, chord in song:
     listOfChords = {}
     for note in chord:
-      if note.instrument in listOfChords:
-        listOfChords[note.instrument].append(note)
+      instrument = note.instrument
+      if instrument in listOfChords:
+        listOfChords[instrument].append(note)
       else:
-        listOfChords[note.instrument] = [note]
+        listOfChords[instrument] = [note]
+
     for instrument, singleChord in listOfChords.items():
-      lowerOctaveNotes = []
-      upperOctaveNotes = []
-      for note in singleChord:
-        if note.key < INSTRUMENT_RANGE[0] + 12:
-          lowerOctaveNotes.append(note)
-        else:
-          upperOctaveNotes.append(note)
+      lowerOctaveNotes = [note for note in singleChord if note.key < INSTRUMENT_RANGE[0] + 12]
+      upperOctaveNotes = [note for note in singleChord if note.key >= INSTRUMENT_RANGE[0] + 12]
+
       if len(lowerOctaveNotes) > CHORD_MAX_SIZES[INSTRUMENTS[instrument]] or len(upperOctaveNotes) > CHORD_MAX_SIZES[INSTRUMENTS[instrument]]:
         print('Warning: Your song contains chords that are larger than allowed.')
         isValid = False
         break
+
     if not isValid:
       break
 
@@ -60,39 +59,41 @@ def verifyFormat(song, songName):
 
 def removeEmptyChests(chestContents):
   newChestContents = {}
+
   for instrument, contents in chestContents.items():
     newChestContents[instrument] = []
+
     for octaves in contents:
       newOctaves = [[], []]
-      isLowerOctaveEmpty = True
-      isUpperOctaveEmpty = True
-      for note in octaves[0]:
-        if note != -1:
-          isLowerOctaveEmpty = False
-          break
-      for note in octaves[1]:
-        if note != -1:
-          isUpperOctaveEmpty = False
-          break
-      if not isLowerOctaveEmpty:
+
+      isLowerOctaveNotEmpty = any(note != -1 for note in octaves[0])
+      isUpperOctaveNotEmpty = any(note != -1 for note in octaves[1])
+
+      if isLowerOctaveNotEmpty:
         newOctaves[0] = octaves[0]
-      if not isUpperOctaveEmpty:
+
+      if isUpperOctaveNotEmpty:
         newOctaves[1] = octaves[1]
+
       newChestContents[instrument].append(newOctaves)
+
   return newChestContents
 
 
 def newDisc(slot, note):
   if note == -1:
     return '{Count:1b,Slot:' + str(slot) + 'b,id:"minecraft:wooden_shovel"}'
+
   if note >= 12:
     note -= 12
+
   disc = NOTES_TO_DISCS_NAMED[note] if NAME_DISCS else NOTES_TO_DISCS_UNNAMED[note]
   return '{Count:1b,Slot:' + str(slot) + 'b,id:' + disc + '}'
 
 
 def createShulker(currentShulker, contents):
   slot = (currentShulker - 1) % 27
+
   # remove trailing comma
   contents = contents[:len(contents) - 1]
   return '{Count:1b,Slot:' + str(
@@ -105,6 +106,7 @@ def createChest(type_, contents):
   # remove trailing comma
   if len(contents) > 0:
     contents = contents[:len(contents) - 1]
+
   return 'minecraft:chest[facing=south,type=' + type_ + ']{Items:[' + contents + ']}'
 
 
@@ -165,6 +167,7 @@ def main():
   print('Generating Schematic...')
   for instrument, contents in minimalChestContents.items():
     currentModule = 1
+
     for module in contents:
       lowerChest1 = ''
       upperChest1 = ''
@@ -175,30 +178,40 @@ def main():
       currentShulker = 1
       lowerOctaveEmpty = len(module[0]) == 0
       upperOctaveEmpty = len(module[1]) == 0
+
       for currentTick in range(songLengthAdjusted):
         currentSlot = currentTick % 27
+
         if not lowerOctaveEmpty:
           lowerShulker += newDisc(currentSlot, module[0][currentTick]) + ','
+
         if not upperOctaveEmpty:
           upperShulker += newDisc(currentSlot, module[1][currentTick]) + ','
+
         # if we are on the last slot of a shulker box, or the song has ended
         if (currentTick + 1) % 27 == 0 or currentTick == songLengthAdjusted - 1:
           # turn the shulker contents into actual shulker
           if not lowerOctaveEmpty:
             lowerShulker = createShulker(currentShulker, lowerShulker)
+
           if not upperOctaveEmpty:
             upperShulker = createShulker(currentShulker, upperShulker)
+
           # if the current shulker should go in the first chests
           if currentShulker <= 27:
             if not lowerOctaveEmpty:
               lowerChest1 += lowerShulker + ','
+
             if not upperOctaveEmpty:
               upperChest1 += upperShulker + ','
+
           else:
             if not lowerOctaveEmpty:
               lowerChest2 += lowerShulker + ','
+
             if not upperOctaveEmpty:
               upperChest2 += upperShulker + ','
+
           # reset the shulkers and increment the current shulker
           lowerShulker = ''
           upperShulker = ''

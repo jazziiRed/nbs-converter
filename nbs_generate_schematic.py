@@ -5,7 +5,7 @@ import mcschematic
 from constants import *
 
 
-def verifyFormat(song, songFile):
+def verifyFormat(song, songName):
     print('Verifying your song...')
     isValid = True
     # check song length
@@ -53,11 +53,7 @@ def verifyFormat(song, songFile):
             break
 
     if not isValid:
-        input('We found some issues with your song. This is likely because you have not used the "nbs_format_song" script. Press Enter to automatically format your song.')
-        import nbs_format_song
-        nbs_format_song.main(songFile)
-        print("Reverifying your song...")
-        verifyFormat(song, songFile)
+        sys.exit(f'We found some issues with your song "{songName}". Please make sure to format it using the "nbs_format_song" script.')
     else:
         print('Song verified. Everything looks good!')
 
@@ -130,7 +126,7 @@ def main():
     except Exception as e:
         sys.exit(f'An error occurred while reading the song file "{songFile}".\nError name: {e.__class__.__name__}\nExact error (search this up for help): {e}')
 
-    verifyFormat(song, songFile)
+    verifyFormat(song, songName)
 
     # fix the length of the song for min fill of last chest
     lastChestFill = (song.header.song_length + 1) % 27

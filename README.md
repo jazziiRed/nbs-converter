@@ -83,8 +83,6 @@ Once you've done this, you're ready to convert any `.nbs` song you wish! Downloa
 
 ### Formatting the Song
 
-***Note**: This is no longer necessary, since the nbs_generate_schematic.py script now automatically formats the song for you. However, make sure that you still navigate to the correct location via `cd` before running the script (see below).*
-
 The first thing that you will want to do is format your song. However you decide to build the final configuration of the music machine, it will not be able to play every `.nbs` song as is, due to chord size limitations, length, illegal notes, etc. So this first script is designed to format the `.nbs` song so that our machine can actually play it.
 
 But before you run the script, you might want to tweak some settings. To do so, open `constants.py` in the text editor of your choice (even notepad is fine) and take a look at any of the variables marked with `EDITABLE SETTING`. **DO NOT** edit any of the variables marked with `DO NOT EDIT` (unless you want to, I'm not your mom).
@@ -114,8 +112,6 @@ Follow the instructions that the script gives you, and at the end it should spit
 ### Generating the Schematic
 
 Now that you have a formatted `.nbs` song that sounds great, it's time to transform it into a form that can be pasted into Minecraft!
-
-***Note**: If you have not already formatted the song, this script will format it for you.*
 
 This part's really easy. Again using either Command Prompt or Terminal, run the following:
 

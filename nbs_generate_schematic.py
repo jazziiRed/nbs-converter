@@ -64,19 +64,19 @@ def removeEmptyChests(chestContents):
     newChestContents[instrument] = []
     for octaves in contents:
       newOctaves = [[], []]
-      isLowerOctaveEmpty = 1
-      isUpperOctaveEmpty = 1
+      isLowerOctaveEmpty = True
+      isUpperOctaveEmpty = True
       for note in octaves[0]:
         if note != -1:
-          isLowerOctaveEmpty = 0
+          isLowerOctaveEmpty = False
           break
       for note in octaves[1]:
         if note != -1:
-          isUpperOctaveEmpty = 0
+          isUpperOctaveEmpty = False
           break
-      if isLowerOctaveEmpty == 0:
+      if not isLowerOctaveEmpty:
         newOctaves[0] = octaves[0]
-      if isUpperOctaveEmpty == 0:
+      if not isUpperOctaveEmpty:
         newOctaves[1] = octaves[1]
       newChestContents[instrument].append(newOctaves)
   return newChestContents
@@ -87,7 +87,7 @@ def newDisc(slot, note):
     return '{Count:1b,Slot:' + str(slot) + 'b,id:"minecraft:wooden_shovel"}'
   if note >= 12:
     note -= 12
-  disc = NOTES_TO_DISCS_NAMED[note] if NAME_DISCS == 1 else NOTES_TO_DISCS_UNNAMED[note]
+  disc = NOTES_TO_DISCS_NAMED[note] if NAME_DISCS else NOTES_TO_DISCS_UNNAMED[note]
   return '{Count:1b,Slot:' + str(slot) + 'b,id:' + disc + '}'
 
 
@@ -177,34 +177,34 @@ def main():
       upperOctaveEmpty = len(module[1]) == 0
       for currentTick in range(songLengthAdjusted):
         currentSlot = currentTick % 27
-        if lowerOctaveEmpty == 0:
+        if not lowerOctaveEmpty:
           lowerShulker += newDisc(currentSlot, module[0][currentTick]) + ','
-        if upperOctaveEmpty == 0:
+        if not upperOctaveEmpty:
           upperShulker += newDisc(currentSlot, module[1][currentTick]) + ','
         # if we are on the last slot of a shulker box, or the song has ended
         if (currentTick + 1) % 27 == 0 or currentTick == songLengthAdjusted - 1:
           # turn the shulker contents into actual shulker
-          if lowerOctaveEmpty == 0:
+          if not lowerOctaveEmpty:
             lowerShulker = createShulker(currentShulker, lowerShulker)
-          if upperOctaveEmpty == 0:
+          if not upperOctaveEmpty:
             upperShulker = createShulker(currentShulker, upperShulker)
           # if the current shulker should go in the first chests
           if currentShulker <= 27:
-            if lowerOctaveEmpty == 0:
+            if not lowerOctaveEmpty:
               lowerChest1 += lowerShulker + ','
-            if upperOctaveEmpty == 0:
+            if not upperOctaveEmpty:
               upperChest1 += upperShulker + ','
           else:
-            if lowerOctaveEmpty == 0:
+            if not lowerOctaveEmpty:
               lowerChest2 += lowerShulker + ','
-            if upperOctaveEmpty == 0:
+            if not upperOctaveEmpty:
               upperChest2 += upperShulker + ','
           # reset the shulkers and increment the current shulker
           lowerShulker = ''
           upperShulker = ''
           currentShulker += 1
 
-      if lowerOctaveEmpty == 0:
+      if not lowerOctaveEmpty:
         lowerChest1 = createChest('right', lowerChest1)
         lowerChest2 = createChest('left', lowerChest2)
         schem.setBlock((offset, 0, -1), lowerChest1)
@@ -215,7 +215,7 @@ def main():
         schem.setBlock((offset + 1, 0, -1), "minecraft:air")
         schem.setBlock((offset, 0, 0), "minecraft:air")
 
-      if upperOctaveEmpty == 0:
+      if not upperOctaveEmpty:
         upperChest1 = createChest('right', upperChest1)
         upperChest2 = createChest('left', upperChest2)
         schem.setBlock((offset, 1, -1), upperChest1)

@@ -2,7 +2,10 @@
 # Choose whether or not to use named discs
 # Using unnamed discs will reduce schematic size and
 # Possibly reduce lag due to less NBT data
-NAME_DISCS = 0
+# Options: True, False (it's case-sensitive,
+# so make sure it's written with a capital first letter and
+# all other letters lowercase)
+NAME_DISCS = False
 
 # EDITABLE SETTING
 # The number of full modules (2 half-modules) of each instrument

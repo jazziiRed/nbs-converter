@@ -42,14 +42,13 @@ Once one of these commands work, take note of which one (`py`, `python`, or `pyt
 
 ### Installing Packages
 
-The two Python scripts in this repo make use of two existing Python libraries: [pynbs](https://github.com/OpenNBS/pynbs) and [mcschematic](https://github.com/Sloimayyy/mcschematic). The first is used to parse, edit, and create `.nbs` files, and the second is used to create and edit Minecraft schematics. Run the following two commands to install them. You can also go to their respective repos for more details.
+The two Python scripts in this repo make use of two existing Python libraries: [pynbs](https://github.com/OpenNBS/pynbs) and [mcschematic](https://github.com/Sloimayyy/mcschematic). The first is used to parse, edit, and create `.nbs` files, and the second is used to create and edit Minecraft schematics. Run the following command to install them. You can also go to their respective repos for more details.
 
 ```bash
-pip install pynbs
-pip install mcschematic
+pip install -r requirements.txt
 ```
 
-Both of these libraries can be installed using `pip`, which should be automatically installed for you alongside Python. If you are on Windows, this should have been a checkbox during installation.
+The libaries can be installed using `pip`, which should be automatically installed for you alongside Python. If you are on Windows, this should have been a checkbox during installation.
 
 `pip` is a package manager used to install Python libraries that other people have written. These libraries contain code that you can use to easily do things that might take a long time to do from scratch, like parsing an `.nbs` file.
 
@@ -113,7 +112,7 @@ Follow the instructions that the script gives you, and at the end it should spit
 
 Now that you have a formatted `.nbs` song that sounds great, it's time to transform it into a form that can be pasted into Minecraft!
 
-This part's really easy. Again using either Command Prompt or Terminal, run the following:
+This part's really easy. Again using either Command Prompt or Terminal, run the following command: -> If you downloaded the whole repository you can just double click the `install_requirements.bat` file.
 
 ```bash
 py nbs_generate_schematic.py
@@ -122,6 +121,20 @@ py nbs_generate_schematic.py
 or whatever Python command worked for you in [Installing Python](#installing-python).
 
 Follow the instructions that the script gives you, and at the end it should spit out a brand new `.schem` file that you can paste into your world!
+
+## Fast Formatting (win only)
+
+Step 1:
+Download the files in the windows folder
+
+Step 2:
+Put your .nbs files in the same folder as nbs_create.py and schem_creator.bat
+
+Step 3:
+Double Click the schem_creator.bat
+
+Step 4:
+Follow the instructions in the terminal
 
 ## Pasting the Song into Minecraft
 

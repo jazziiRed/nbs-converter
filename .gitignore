@@ -4,4 +4,3 @@ __pycache__
 *.nbs
 !example_songs/*.nbs
 *.schem
-*.txt
